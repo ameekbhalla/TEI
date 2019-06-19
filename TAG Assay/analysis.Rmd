@@ -1,0 +1,76 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r} 
+#Set working directory 
+setwd("C:/Users/Bhalla/Dropbox/Ameek/Analysis") 
+```
+
+```{r results = 'hide'}
+#Load packages
+library(tidyr)
+library(purrr)
+library(dplyr)
+library(ggplot2)
+library(XLConnect)
+library(knitr)
+```
+
+The file with the microplate reader data was merged with a file indicating the gentotype, media, and sex of each sample
+```{r}
+book1 <-  "F0+F1, Sixth Lot Technical Replicate 1.xlsx"
+book <- loadWorkbook(book1) #the imported file is assigned the random name book
+sheet_names <- getSheets(book) #all sheet names are extracted as a list
+map(book[sheet_names], head) #the contents of all sheets are viewed; the argument book[sheet_names] is a list
+map(book[sheet_names[4:6]], `[`) %>% #sheets 4 to 6 are extracted because they contain the long format data
+  map(left_join, book["L6"]) -> merged_plates #the sheets are left joined and assigned to a new list
+writeWorksheet(object = book, data = merged_plates["plate1"], sheet = "plate1")
+writeWorksheet(object = book, data = merged_plates["plate2"], sheet = "plate2")
+writeWorksheet(object = book, data = merged_plates["plate3"], sheet = "plate3")
+saveWorkbook(book)
+```
+
+```{r}
+book2 <-  "F0+F1, Sixth Lot Technical Replicate 2.xlsx"
+book <- loadWorkbook(book2) #the imported file is assigned the random name book
+sheet_names <- getSheets(book) #all sheet names are extracted as a list
+map(book[sheet_names], head) #the contents of all sheets are viewed; the argument book[sheet_names] is a list
+map(book[sheet_names[4:6]], `[`) %>% #sheets 4 to 6 are extracted because they contain the long format data
+  map(left_join, book["L6"]) -> merged_plates #the sheets are left joined and assigned to a new list
+writeWorksheet(object = book, data = merged_plates["plate1"], sheet = "plate1")
+writeWorksheet(object = book, data = merged_plates["plate2"], sheet = "plate2")
+writeWorksheet(object = book, data = merged_plates["plate3"], sheet = "plate3")
+saveWorkbook(book)
+```
+
+```{r}
+book3 <-  "F0+F1, Eighth Lot Technical Replicate 1.xlsx"
+book <- loadWorkbook(book3) #the imported file is assigned the random name book
+sheet_names <- getSheets(book) #all sheet names are extracted as a list
+map(book[sheet_names], head) #the contents of all sheets are viewed; the argument book[sheet_names] is a list
+map(book[sheet_names[5:8]], `[`) %>% #sheets 4 to 6 are extracted because they contain the long format data
+  map(left_join, book["L8"]) -> merged_plates #the sheets are left joined and assigned to a new list
+writeWorksheet(object = book, data = merged_plates["plate4"], sheet = "plate4")
+writeWorksheet(object = book, data = merged_plates["plate5"], sheet = "plate5")
+writeWorksheet(object = book, data = merged_plates["plate6"], sheet = "plate6")
+writeWorksheet(object = book, data = merged_plates["plate7"], sheet = "plate7")
+saveWorkbook(book)
+```
+
+```{r}
+book3 <-  "F0+F1, Eighth Lot Technical Replicate 2.xlsx"
+book <- loadWorkbook(book3) #the imported file is assigned the random name book
+sheet_names <- getSheets(book) #all sheet names are extracted as a list
+map(book[sheet_names], head) #the contents of all sheets are viewed; the argument book[sheet_names] is a list
+map(book[sheet_names[5:8]], `[`) %>% #sheets 4 to 6 are extracted because they contain the long format data
+  map(left_join, book["L8"]) -> merged_plates #the sheets are left joined and assigned to a new list
+writeWorksheet(object = book, data = merged_plates["plate4"], sheet = "plate4")
+writeWorksheet(object = book, data = merged_plates["plate5"], sheet = "plate5")
+writeWorksheet(object = book, data = merged_plates["plate6"], sheet = "plate6")
+writeWorksheet(object = book, data = merged_plates["plate7"], sheet = "plate7")
+saveWorkbook(book)
+```
+
+add tag_blank, tag, bca_blank, bca, and generation columns
